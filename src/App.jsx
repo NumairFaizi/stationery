@@ -10,6 +10,7 @@ import { BrowserRouter, Routes, Route, useLocation } from 'react-router-dom';
 function App() {
   const location = useLocation();
   const hideNavbarPaths = ["/"];
+  
 
   return (
     <>

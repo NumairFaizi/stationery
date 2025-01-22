@@ -76,14 +76,11 @@ const Navbar = () => {
       {isMobileMenuOpen && (
         <div className="md:hidden bg-white border-t border-gray-200">
           <div className="flex flex-col space-y-4 p-4">
-            <a href="../pages/Add_product" className="text-sm font-medium hover:text-gray-900">
-              Dashboard
+            <a href="/Billing" className="text-sm font-medium hover:text-gray-900">
+              Bill
             </a>
-            <a href="#team" className="text-sm font-medium hover:text-gray-900">
-              Team
-            </a>
-            <a href="#projects" className="text-sm font-medium hover:text-gray-900">
-              Projects
+            <a href="/Inventory" className="text-sm font-medium hover:text-gray-900">
+              Inventory
             </a>
             <button
               onClick={openModal}
