@@ -3,10 +3,9 @@ import React, { useState, useEffect } from 'react';
 const Billing = () => {
   const [customerName, setCustomerName] = useState('');
   const [email, setEmail] = useState('');
-  const [amount, setAmount] = useState('');
+  const [amount, setAmount] = useState(0); // Start with 0
   const [selectedProduct, setSelectedProduct] = useState('');
   const [products, setProducts] = useState([]);
-
 
   useEffect(() => {
     const fetchProducts = async () => {
@@ -25,6 +24,16 @@ const Billing = () => {
 
     fetchProducts();
   }, []);
+
+  const handleProductChange = (e) => {
+    const selectedProductName = e.target.value;
+    setSelectedProduct(selectedProductName);
+
+    const product = products.find(p => p.name === selectedProductName);
+    if (product) {
+      setAmount(product.price);
+    }
+  };
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -61,18 +70,9 @@ const Billing = () => {
             required
           />
 
-          <input
-            type="number"
-            placeholder="Billing Amount"
-            value={amount}
-            onChange={(e) => setAmount(e.target.value)}
-            className="w-full p-3 rounded-lg text-gray-100 border-2 border-gray-500 focus:border-yellow-500 focus:ring-2 focus:ring-yellow-300 focus:outline-none bg-gray-700"
-            required
-          />
-
           <select
             value={selectedProduct}
-            onChange={(e) => setSelectedProduct(e.target.value)}
+            onChange={handleProductChange}
             className="w-full p-3 rounded-lg text-gray-100 border-2 border-gray-500 focus:border-yellow-500 focus:ring-2 focus:ring-yellow-300 focus:outline-none bg-gray-700"
             required
           >
@@ -86,6 +86,14 @@ const Billing = () => {
             ))}
           </select>
 
+
+          <input
+            type="number"
+            value={amount}
+            readOnly  
+            className="w-20 p-3 rounded-lg text-gray-100 border-2 border-gray-500 focus:border-yellow-500 focus:ring-2 focus:ring-yellow-300 focus:outline-none bg-gray-700"
+          />
+          
           <button
             type="submit"
             className="w-full py-3 bg-gradient-to-r from-green-500 to-green-700 text-white font-bold rounded-lg hover:from-green-400 hover:to-green-600 transition duration-300"
