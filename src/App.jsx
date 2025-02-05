@@ -20,6 +20,7 @@ function App() {
         <Route exact path="/" element={<Login />} />
         <Route path="/Dashboard" element={<Dashboard />} />
         <Route path='/Billing' element={<Billing/>}/>
+        <Route path="/Inventory" element={<Inventory />} />
       </Routes>
     </>
   );

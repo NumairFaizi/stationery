@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 import logo from "../logo.png";
 import Add_product from "./Add_product";
 
@@ -12,7 +12,7 @@ const Navbar = () => {
   const handleLogout = () => {
     setIsLoggedIn(false);
     alert("Logging out...");
-    navigate("/");
+    navigate("/"); // Redirect to the login page after logging out
   };
 
   const openModal = () => setIsModalOpen(true);
@@ -25,13 +25,12 @@ const Navbar = () => {
         <div className="flex items-center">
           <img src={logo} alt="Logo" className="h-10 w-10" />
           <div className="hidden md:flex space-x-6 ml-8 text-gray-700">
-            <a href="../Billing" className="text-sm font-medium hover:text-gray-900">
+            <Link to="/Billing" className="text-sm font-medium hover:text-gray-900">
               Bill
-            </a>
-            <a href="../pages/Inventory" className="text-sm font-medium hover:text-gray-900">
+            </Link>
+            <Link to="/Inventory" className="text-sm font-medium hover:text-gray-900">
               Inventory
-            </a>
-
+            </Link>
           </div>
         </div>
 
@@ -76,12 +75,12 @@ const Navbar = () => {
       {isMobileMenuOpen && (
         <div className="md:hidden bg-white border-t border-gray-200">
           <div className="flex flex-col space-y-4 p-4">
-            <a href="/Billing" className="text-sm font-medium hover:text-gray-900">
+            <Link to="/Billing" className="text-sm font-medium hover:text-gray-900">
               Bill
-            </a>
-            <a href="/Inventory" className="text-sm font-medium hover:text-gray-900">
+            </Link>
+            <Link to="/Inventory" className="text-sm font-medium hover:text-gray-900">
               Inventory
-            </a>
+            </Link>
             <button
               onClick={openModal}
               className="px-4 py-2 bg-green-600 text-white text-sm font-medium rounded hover:bg-green-500"
