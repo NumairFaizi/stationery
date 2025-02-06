@@ -5,6 +5,7 @@ import Dashboard from './pages/dashboard';
 import Navbar from './assets/components/Navbar'; 
 import Billing from './pages/Billing';
 import Inventory from './pages/Inventory';
+import Backup from './pages/Backup';
 import { BrowserRouter, Routes, Route, useLocation } from 'react-router-dom';
 
 function App() {
@@ -21,6 +22,7 @@ function App() {
         <Route path="/Dashboard" element={<Dashboard />} />
         <Route path='/Billing' element={<Billing/>}/>
         <Route path="/Inventory" element={<Inventory />} />
+        <Route path="/Backup" element={<Backup/>} />
       </Routes>
     </>
   );

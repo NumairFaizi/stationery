@@ -31,6 +31,9 @@ const Navbar = () => {
             <Link to="/Inventory" className="text-sm font-medium hover:text-gray-900">
               Inventory
             </Link>
+            <Link to="/Backup" className="text-sm font-medium hover:text-gray-900">
+              Ledger
+            </Link>
           </div>
         </div>
 
@@ -80,6 +83,9 @@ const Navbar = () => {
             </Link>
             <Link to="/Inventory" className="text-sm font-medium hover:text-gray-900">
               Inventory
+            </Link>
+            <Link to="/Backup" className="text-sm font-medium hover:text-gray-900">
+              Ledger
             </Link>
             <button
               onClick={openModal}

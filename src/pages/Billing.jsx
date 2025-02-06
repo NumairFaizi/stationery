@@ -3,8 +3,8 @@ import React, { useState, useEffect } from 'react';
 const Billing = () => {
   const [customerName, setCustomerName] = useState('');
   const [email, setEmail] = useState('');
-  const [amount, setAmount] = useState(0); // Start with 0
-  const [selectedProduct, setSelectedProduct] = useState('');
+  const [amount, setAmount] = useState(0);
+  const [productName, setProductName] = useState('');
   const [products, setProducts] = useState([]);
 
   useEffect(() => {
@@ -26,18 +26,25 @@ const Billing = () => {
   }, []);
 
   const handleProductChange = (e) => {
-    const selectedProductName = e.target.value;
-    setSelectedProduct(selectedProductName);
+    const enteredProduct = e.target.value;
+    setProductName(enteredProduct);
 
-    const product = products.find(p => p.name === selectedProductName);
-    if (product) {
-      setAmount(product.price);
-    }
+    const product = products.find((p) => p.name.toLowerCase() === enteredProduct.toLowerCase());
+    setAmount(product ? product.price : 0);
   };
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    alert(`Billing Details:\nCustomer: ${customerName}\nEmail: ${email}\nAmount: $${amount}\nProduct: ${selectedProduct}`);
+    alert(
+      `Billing Details:\nCustomer: ${customerName}\nEmail: ${email}\nProduct: ${productName}\nAmount: $${amount}`
+    );
+  };
+
+  const handleReset = () => {
+    setCustomerName('');
+    setEmail('');
+    setProductName('');
+    setAmount(0);
   };
 
   return (
@@ -48,7 +55,7 @@ const Billing = () => {
         </h1>
 
         <h2 className="text-2xl font-semibold text-center mb-8 text-gray-300">
-          Customer Billing Form
+          Enter Product to be Billed
         </h2>
 
         <form className="space-y-6" onSubmit={handleSubmit}>
@@ -70,30 +77,22 @@ const Billing = () => {
             required
           />
 
-          <select
-            value={selectedProduct}
+          <input
+            type="text"
+            placeholder="Enter Product Name"
+            value={productName}
             onChange={handleProductChange}
             className="w-full p-3 rounded-lg text-gray-100 border-2 border-gray-500 focus:border-yellow-500 focus:ring-2 focus:ring-yellow-300 focus:outline-none bg-gray-700"
             required
-          >
-            <option value="" disabled>
-              Select a Product
-            </option>
-            {products.map((product) => (
-              <option key={product.id} value={product.name}>
-                {product.name}
-              </option>
-            ))}
-          </select>
-
+          />
 
           <input
             type="number"
             value={amount}
-            readOnly  
-            className="w-20 p-3 rounded-lg text-gray-100 border-2 border-gray-500 focus:border-yellow-500 focus:ring-2 focus:ring-yellow-300 focus:outline-none bg-gray-700"
+            readOnly
+            className="w-full p-3 rounded-lg text-gray-100 border-2 border-gray-500 focus:border-yellow-500 focus:ring-2 focus:ring-yellow-300 focus:outline-none bg-gray-700"
           />
-          
+
           <button
             type="submit"
             className="w-full py-3 bg-gradient-to-r from-green-500 to-green-700 text-white font-bold rounded-lg hover:from-green-400 hover:to-green-600 transition duration-300"
@@ -101,10 +100,13 @@ const Billing = () => {
             Submit Billing
           </button>
 
-          <input
-            type="reset"
+          <button
+            type="button"
+            onClick={handleReset}
             className="w-full py-3 bg-gradient-to-r from-red-500 to-red-700 text-white font-bold rounded-lg hover:from-red-400 hover:to-red-600 transition duration-300"
-          />
+          >
+            Reset Form
+          </button>
         </form>
       </div>
     </div>
