@@ -37,12 +37,6 @@ const Inventory = () => {
             </tr>
           </tbody>
         </table>
-
-        <div className="mt-8 text-center">
-          <button className="py-2 px-6 bg-green-600 text-white font-bold rounded-lg hover:bg-green-500 transition duration-300">
-            Add New Product
-          </button>
-        </div>
       </div>
     </div>
   );
