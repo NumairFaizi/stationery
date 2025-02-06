@@ -5,7 +5,7 @@ const Add_product = ({ closeModal }) => {
     <div className="fixed inset-0 z-50 flex justify-center items-center bg-black bg-opacity-50">
       <div className="backdrop-blur-sm bg-white/30 p-8 rounded-lg shadow-lg w-full max-w-md relative">
         <button
-          onClick={closeModal}  // Call closeModal to hide the modal
+          onClick={closeModal}  
           className="absolute top-2 right-2 text-gray-600 hover:text-gray-900"
         >
           ✖
@@ -30,7 +30,7 @@ const Add_product = ({ closeModal }) => {
           />
           <input
             type="number"
-            placeholder="Customer Rate"
+            placeholder="Rate"
             id="rate"
             required
             className="w-full p-3 rounded-md text-gray-800 border-2 border-gray-300 focus:border-blue-500 focus:outline-none opacity-100"
@@ -39,13 +39,6 @@ const Add_product = ({ closeModal }) => {
             type="number"
             placeholder="Quantity"
             id="qty"
-            required
-            className="w-full p-3 rounded-md text-gray-800 border-2 border-gray-300 focus:border-blue-500 focus:outline-none opacity-100"
-          />
-          <input
-            type="date"
-            placeholder="Purchase Date"
-            id="purchase_date"
             required
             className="w-full p-3 rounded-md text-gray-800 border-2 border-gray-300 focus:border-blue-500 focus:outline-none opacity-100"
           />
