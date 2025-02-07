@@ -5,7 +5,7 @@ const Login = () => {
   const navigate = useNavigate();
 
   async function handleLogin(e) {
-    e.preventDefault(); // Prevents default form submission
+    e.preventDefault();
     navigate('/Dashboard');
   }
 
@@ -22,8 +22,8 @@ const Login = () => {
           </h2>
           <form className="space-y-6" onSubmit={handleLogin}>
             <input
-              type="number"
-              placeholder="Mobile Number"
+              type="text"
+              placeholder="User Name"
               className="w-full p-3 rounded-lg text-gray-100 border-2 border-gray-500 focus:border-yellow-500 focus:ring-2 focus:ring-yellow-300 focus:outline-none bg-gray-700"
               required
             />
