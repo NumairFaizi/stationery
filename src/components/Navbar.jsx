@@ -1,18 +1,17 @@
 import React, { useState } from "react";
 import { useNavigate, Link } from "react-router-dom";
-import logo from "../logo.png";
+import logo from "../assets/logo.png";
 import Add_product from "./Add_product";
 
 const Navbar = () => {
-  const [isLoggedIn, setIsLoggedIn] = useState(true);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const navigate = useNavigate();
 
   const handleLogout = () => {
-    setIsLoggedIn(false);
-    alert("Logging out...");
-    navigate("/"); // Redirect to the login page after logging out
+
+    localStorage.setItem('login', false)
+    navigate("/login");
   };
 
   const openModal = () => setIsModalOpen(true);
@@ -23,7 +22,9 @@ const Navbar = () => {
     <nav className="bg-white shadow-md">
       <div className="container mx-auto flex items-center justify-between px-4 py-2">
         <div className="flex items-center">
-          <img src={logo} alt="Logo" className="h-10 w-10" />
+          <Link to={'/Dashboard'}>
+            <img src={logo} alt="Logo" className="h-10 w-10 hover:cursor-pointer" />
+          </Link>
           <div className="hidden md:flex space-x-6 ml-8 text-gray-700">
             <Link to="/Billing" className="text-sm font-medium hover:text-gray-900">
               Bill
@@ -44,14 +45,14 @@ const Navbar = () => {
           >
             Add Product
           </button>
-          {isLoggedIn && (
-            <button
-              onClick={handleLogout}
-              className="px-4 py-2 bg-red-500 text-white text-sm font-medium rounded hover:bg-red-600"
-            >
-              Logout
-            </button>
-          )}
+
+          <button
+            onClick={handleLogout}
+            className="px-4 py-2 bg-red-500 text-white text-sm font-medium rounded hover:bg-red-600"
+          >
+            Logout
+          </button>
+
         </div>
 
         <button

@@ -1,8 +1,7 @@
-import { useState } from 'react';
 import './App.css';
 import Login from './pages/Login';
-import Dashboard from './pages/dashboard';
-import Navbar from './assets/components/Navbar'; 
+import Dashboard from './pages/Dashboard';
+import Navbar from './components/Navbar'; 
 import Billing from './pages/Billing';
 import Inventory from './pages/Inventory';
 import Backup from './pages/Backup';
@@ -10,7 +9,7 @@ import { BrowserRouter, Routes, Route, useLocation } from 'react-router-dom';
 
 function App() {
   const location = useLocation();
-  const hideNavbarPaths = ["/"];
+  const hideNavbarPaths = ["/login"];
   
 
   return (
@@ -18,8 +17,8 @@ function App() {
       {!hideNavbarPaths.includes(location.pathname) && <Navbar />}
 
       <Routes>
-        <Route exact path="/" element={<Login />} />
-        <Route path="/Dashboard" element={<Dashboard />} />
+        <Route exact path="/login" element={<Login />} />
+        <Route path="/" element={<Dashboard />} />
         <Route path='/Billing' element={<Billing/>}/>
         <Route path="/Inventory" element={<Inventory />} />
         <Route path="/Backup" element={<Backup/>} />
