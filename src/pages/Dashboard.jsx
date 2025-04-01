@@ -26,8 +26,8 @@ const Dashboard = () => {
       setTotalProduct(product.length)
 
 
-      console.log(product)
-      console.log(totalPrice)
+      // console.log(product)
+      // console.log(totalPrice)
     }
     fetchData()
 

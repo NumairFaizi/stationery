@@ -22,7 +22,7 @@ const Billing = () => {
       }
     };
 
-    fetchProducts();
+    // fetchProducts();
   }, []);
 
   const handleProductChange = (e) => {
