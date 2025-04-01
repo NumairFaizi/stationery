@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from 'react'
-import { getAllProducts } from '../lib/db';
 import * as XLSX from 'xlsx';
 
 const Inventory = () => {
@@ -23,8 +22,8 @@ const Inventory = () => {
 
   useEffect(() => {
     const fetchProducts = async () => {
-      const data = await getAllProducts();
-      setProducts(data);
+
+      // setProducts(data);
     };
 
     fetchProducts();

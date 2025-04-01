@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { addProduct } from '../lib/db';  // Import IndexedDB functions
+
 
 const Add_product = ({ closeModal }) => {
     const [productName, setProductName] = useState('');
@@ -18,9 +18,7 @@ const Add_product = ({ closeModal }) => {
             totalRate: parseFloat((rate * quantity), 10)
         };
 
-        // Save product to IndexedDB
-        const resp = await addProduct(product);
-        console.log(resp)
+        // add product
 
         // Clear form fields
         setProductName('');
