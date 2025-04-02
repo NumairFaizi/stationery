@@ -15,17 +15,10 @@ const Billing = () => {
       const { status, data } = await getRequest('/api/product/');
 
       if (status === 200 && data) {
-        
+
         setProducts(data);
 
-        const uniqueBrands = data.reduce((acc, prod) => {
-
-          if (!acc.includes(prod.brand)) {
-
-            acc.push(acc)
-          }
-          return acc
-        }, [])
+        const uniqueBrands = [...new Set(data.map((product) => product.brand))];
         setBrands(uniqueBrands)
       }
 
@@ -52,8 +45,11 @@ const Billing = () => {
     } else {
 
       newProducts[index][field] = value;
-      if (field === 'name') {
-        const selectedProduct = products.find((p) => p.name === value);
+      if (field === 'name' || field === 'brand') {
+
+        const selectedProduct = products.find(
+          (p) => p.name === newProducts[index].name && p.brand === newProducts[index].brand
+        );
         if (selectedProduct) {
           newProducts[index].price = selectedProduct.price;
           newProducts[index].brand = selectedProduct.brand;
@@ -106,8 +102,8 @@ const Billing = () => {
           </div>
 
           {billingProducts.map((item, index) => (
-           
-           <div key={index} className="flex gap-2 flex-wrap p-2 border-b border-gray-600">
+
+            <div key={index} className="flex gap-2 flex-wrap p-2 border-b border-gray-600">
 
               <select
                 value={item.name}
@@ -135,7 +131,7 @@ const Billing = () => {
                 <option value="">Select Brand</option>
 
                 {brands.map((br, index) => (
-                  
+
                   <option key={index} value={br}>
                     {br}
                   </option>

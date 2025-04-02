@@ -60,7 +60,7 @@ const Inventory = () => {
               <th className="py-3 px-2 sm:px-4 text-lg font-medium">Product</th>
               <th className="py-3 px-2 sm:px-4 text-lg font-medium">Brand</th>
               <th className="py-3 px-2 sm:px-4 text-lg font-medium">Quantity</th>
-              <th className="py-3 px-2 sm:px-4 text-lg font-medium">Price</th>
+              <th className="py-3 px-2 sm:px-4 text-lg font-medium">Price per Item</th>
               <th className="py-3 px-2 sm:px-4 text-lg font-medium">Total Price</th>
             </tr>
           </thead>
