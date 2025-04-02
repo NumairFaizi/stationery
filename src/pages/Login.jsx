@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import postRequest from '../../services/postRequest';
+import notify from '../utils/toast';
+import { ToastContainer } from 'react-toastify';
 
 const Login = () => {
   const navigate = useNavigate();
@@ -14,20 +16,24 @@ const Login = () => {
     // console.log(userName, password)
     e.preventDefault();
 
-    const response = await postRequest('/api/users/login', { username: userName, password: password })
-   
-    if (response) {
+    const { status, data } = await postRequest('/api/users/login', { username: userName, password: password })
 
-      // console.log(response)
-      localStorage.setItem('stationary', response.accessToken)
-      navigate('/');
+    if (status != 200) {
+      notify(status, data.message)
+      return
     }
+    // console.log(response)
+    localStorage.setItem('stationary', data.accessToken)
+    navigate('/');
+
   }
 
 
   return (
     <>
       <div className="flex justify-center items-center min-h-screen bg-gradient-to-br from-gray-800 via-gray-700 to-gray-900">
+
+        <ToastContainer />
         <div className="bg-white/10 p-8 rounded-2xl shadow-2xl w-full max-w-md backdrop-blur-xl border-2 border-gray-200/30">
 
 

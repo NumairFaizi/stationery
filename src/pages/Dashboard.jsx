@@ -16,10 +16,15 @@ const Dashboard = () => {
     if (!localStorage.getItem('stationary')) navigate('/login')
     const fetchData = async () => {
 
-      const products = await getRequest('/api/product/')
+      const { status, data } = await getRequest('/api/product/')
+      console.log(data, status)
+      if (status != 200) {
 
-      // console.log(products)
-      setTotalPrice(products.reduce((sum, item) => sum + Number(item.price), 0))
+        return
+      }
+
+      // console.log(data.products)
+      setTotalPrice(data.products.reduce((sum, item) => sum + Number(item.price), 0))
 
       setTotalProduct(products.length)
     }
@@ -66,6 +71,7 @@ const Dashboard = () => {
             <Card title='Out of Stock' count={totalProduct} />
 
           </div>
+
 
           <div className="mt-8 bg-gray-800 p-6 rounded-lg"></div>
         </div>
