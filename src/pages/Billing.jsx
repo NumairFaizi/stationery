@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import getRequest from '../../services/getRequest';
+import postRequest from '../../services/postRequest'
 
 const Billing = () => {
   const [customerName, setCustomerName] = useState('');
@@ -61,11 +62,21 @@ const Billing = () => {
     setBillingProducts(newProducts);
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    alert(
-      `Billing Details:\nCustomer: ${customerName}\nEmail: ${email}\nProducts: ${JSON.stringify(billingProducts)}\nTotal Amount: $${billingProducts.reduce((sum, p) => sum + p.totalPrice, 0)}`
-    );
+
+    const bill = {
+
+      customerName,
+      email,
+      billingProducts, 
+      totalAmount: billingProducts.reduce((sum, p) => sum + p.totalPrice, 0),
+      totalItem: billingProducts.length,
+      date: new Date().toLocaleString()
+    } 
+    console.log(bill)
+
+    // const {status, data} = await postRequest('', bill)
   };
 
   const handleReset = () => {
