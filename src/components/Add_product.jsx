@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import postRequest from '../../services/postRequest'
-import { ToastContainer, toast } from 'react-toastify';
+import { ToastContainer} from 'react-toastify';
+import notify from '../utils/toast';
 
 const Add_product = ({ closeModal }) => {
     const [productName, setProductName] = useState('');
@@ -23,32 +24,8 @@ const Add_product = ({ closeModal }) => {
         // add product
         const { status, data } = await postRequest('/api/product/', product)
 
-        const notify = () => {
-            if (status !== 201) {
-
-                toast.error(data.message, {
-                    position: "bottom-right",
-                    autoClose: 3000,
-                    hideProgressBar: false,
-                    closeOnClick: true,
-                    pauseOnHover: true,
-                    draggable: true,
-                    progress: undefined,
-                });
-
-            } else {
-                toast.success(data.message, {
-                    position: "bottom-right",
-                    autoClose: 3000,
-                    hideProgressBar: false,
-                    closeOnClick: true,
-                    pauseOnHover: true,
-                    draggable: true,
-                    progress: undefined,
-                });
-            }
-        };
-        notify()
+      
+        notify(status, data.message)
 
         // Clear form fields
         setProductName('');

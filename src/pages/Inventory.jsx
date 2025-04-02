@@ -1,5 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import * as XLSX from 'xlsx';
+import getRequest from '../../services/getRequest';
+import notify from '../utils/toast';
 
 const Inventory = () => {
   const [products, setProducts] = useState([]);
@@ -23,7 +25,16 @@ const Inventory = () => {
   useEffect(() => {
     const fetchProducts = async () => {
 
-      // setProducts(data);
+      const {status, data} = await getRequest('/api/product')
+      console.log(status, data)
+
+      if (status != 200) {
+
+        notify(status, data.message)
+      }
+      setProducts(data);
+
+
     };
 
     fetchProducts();
@@ -56,11 +67,11 @@ const Inventory = () => {
           <tbody>
             {products.map((product, index) => (
               <tr key={index} className="hover:bg-gray-700 transition-all duration-200">
-                <td className="py-3 px-2 sm:px-4">{product.productName}</td>
+                <td className="py-3 px-2 sm:px-4">{product.name}</td>
                 <td className="py-3 px-2 sm:px-4">{product.brand}</td>
-                <td className="py-3 px-2 sm:px-4">{product.quantity}</td>
-                <td className="py-3 px-2 sm:px-4">{product.rate}</td>
-                <td className="py-3 px-2 sm:px-4">{product.totalRate}</td>
+                <td className="py-3 px-2 sm:px-4">{product.qty}</td>
+                <td className="py-3 px-2 sm:px-4">{product.price}</td>
+                <td className="py-3 px-2 sm:px-4">{product.price * product.qty}</td>
               </tr>
             ))}
           </tbody>

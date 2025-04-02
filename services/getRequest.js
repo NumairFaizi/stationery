@@ -14,8 +14,7 @@ export default async function getRequest(url) {
 
         const json = await response.json();
         
-        // console.log(json)
-        return json
+        return {status: response.status, data: json}
     } catch (error) {
         console.log(error);
     }
