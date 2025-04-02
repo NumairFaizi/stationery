@@ -13,7 +13,7 @@ const Dashboard = () => {
 
   useEffect(() => {
 
-    if (!localStorage.getItem('sationary')) navigate('/login')
+    if (!localStorage.getItem('stationary')) navigate('/login')
     const fetchData = async () => {
 
       const products = await getRequest('/api/product/')

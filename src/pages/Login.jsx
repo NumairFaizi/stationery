@@ -18,7 +18,7 @@ const Login = () => {
    
     if (response) {
 
-      // console.log(response.status)
+      // console.log(response)
       localStorage.setItem('stationary', response.accessToken)
       navigate('/');
     }
