@@ -4,7 +4,7 @@ export default async function getRequest(url) {
 
         const token = localStorage.getItem('stationary')
 
-        console.log(token)
+        // console.log(token)
         const response = await fetch(url, {
 
             method: 'GET',

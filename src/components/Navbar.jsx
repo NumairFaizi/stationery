@@ -24,7 +24,11 @@ const Navbar = () => {
           <Link to={'/'}>
             <img src={logo} alt="Logo" className="h-10 w-10 hover:cursor-pointer" />
           </Link>
-          <div className="hidden md:flex space-x-6 ml-8 text-gray-700">
+          <div className="hidden md:flex space-x-6 ml-8 text-gray-700">  
+            <Link to="/" className="text-sm font-medium hover:text-gray-900">
+              Home
+            </Link>
+          
             <Link to="/Billing" className="text-sm font-medium hover:text-gray-900">
               Bill
             </Link>

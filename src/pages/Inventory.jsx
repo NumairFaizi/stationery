@@ -26,7 +26,7 @@ const Inventory = () => {
     const fetchProducts = async () => {
 
       const {status, data} = await getRequest('/api/product')
-      console.log(status, data)
+      // console.log(status, data)
 
       if (status != 200) {
 
@@ -61,7 +61,7 @@ const Inventory = () => {
               <th className="py-3 px-2 sm:px-4 text-lg font-medium">Brand</th>
               <th className="py-3 px-2 sm:px-4 text-lg font-medium">Quantity</th>
               <th className="py-3 px-2 sm:px-4 text-lg font-medium">Price</th>
-              <th className="py-3 px-2 sm:px-4 text-lg font-medium">Total Value</th>
+              <th className="py-3 px-2 sm:px-4 text-lg font-medium">Total Price</th>
             </tr>
           </thead>
           <tbody>
