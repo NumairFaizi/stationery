@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import getRequest from '../../services/getRequest';
 import postRequest from '../../services/postRequest'
+import toast from '../utils/toast'
+import { ToastContainer } from 'react-toastify';
 
 const Billing = () => {
   const [customerName, setCustomerName] = useState('');
@@ -69,14 +71,17 @@ const Billing = () => {
 
       customerName,
       email,
-      billingProducts, 
+      billingProducts,
       totalAmount: billingProducts.reduce((sum, p) => sum + p.totalPrice, 0),
       totalItem: billingProducts.length,
       date: new Date().toLocaleString()
-    } 
-    console.log(bill)
+    }
+    // console.log(bill)
 
-    // const {status, data} = await postRequest('', bill)
+    const { status, data } = await postRequest('/api/billing/add-bill', bill)
+    console.log(status)
+
+    toast(status, data)
   };
 
   const handleReset = () => {
@@ -87,6 +92,8 @@ const Billing = () => {
 
   return (
     <div className="flex justify-center min-h-screen bg-gradient-to-br from-gray-800 via-gray-700 to-gray-900 p-4">
+      <ToastContainer />
+
       <div className="bg-white/10 p-8 shadow-2xl w-full backdrop-blur-xl">
 
         <form className="space-y-6" onSubmit={handleSubmit}>
