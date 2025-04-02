@@ -9,8 +9,7 @@ const Navbar = () => {
   const navigate = useNavigate();
 
   const handleLogout = () => {
-
-    localStorage.setItem('login', false)
+    localStorage.setItem('login', false);
     navigate("/login");
   };
 
@@ -22,7 +21,7 @@ const Navbar = () => {
     <nav className="bg-white shadow-md">
       <div className="container mx-auto flex items-center justify-between px-4 py-2">
         <div className="flex items-center">
-          <Link to={'/Dashboard'}>
+          <Link to={'/'}>
             <img src={logo} alt="Logo" className="h-10 w-10 hover:cursor-pointer" />
           </Link>
           <div className="hidden md:flex space-x-6 ml-8 text-gray-700">
@@ -52,7 +51,6 @@ const Navbar = () => {
           >
             Logout
           </button>
-
         </div>
 
         <button
@@ -94,14 +92,12 @@ const Navbar = () => {
             >
               Add Product
             </button>
-            {isLoggedIn && (
-              <button
-                onClick={handleLogout}
-                className="px-4 py-2 bg-red-500 text-white text-sm font-medium rounded hover:bg-red-600"
-              >
-                Logout
-              </button>
-            )}
+            <button
+              onClick={handleLogout}
+              className="px-4 py-2 bg-red-500 text-white text-sm font-medium rounded hover:bg-red-600"
+            >
+              Logout
+            </button>
           </div>
         </div>
       )}

@@ -1,5 +1,7 @@
 import React, { useState } from 'react';
-import { addProduct } from '../lib/db';  // Import IndexedDB functions
+import postRequest from '../../services/postRequest'
+import { ToastContainer} from 'react-toastify';
+import notify from '../utils/toast';
 
 const Add_product = ({ closeModal }) => {
     const [productName, setProductName] = useState('');
@@ -11,16 +13,19 @@ const Add_product = ({ closeModal }) => {
         event.preventDefault();
 
         const product = {
-            productName,
+            name: productName,
             brand,
             rate: parseFloat(rate),
-            quantity: parseInt(quantity, 10),
-            totalRate: parseFloat((rate * quantity), 10)
+            qty: parseInt(quantity, 10),
+            price: parseFloat((rate * quantity), 10)
         };
 
-        // Save product to IndexedDB
-        const resp = await addProduct(product);
-        console.log(resp)
+        // console.log(product)
+        // add product
+        const { status, data } = await postRequest('/api/product/', product)
+
+      
+        notify(status, data.message)
 
         // Clear form fields
         setProductName('');
@@ -34,6 +39,8 @@ const Add_product = ({ closeModal }) => {
 
     return (
         <div className="fixed inset-0 z-50 flex justify-center items-center bg-black bg-opacity-50">
+
+            <ToastContainer />
             <div className="backdrop-blur-sm bg-white/30 p-8 rounded-lg shadow-lg w-full max-w-md relative">
                 <button
                     onClick={closeModal}

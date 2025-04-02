@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { getAllProducts } from '../lib/db';
 import Card from '../components/Card';
+import getRequest from '../../services/getRequest'
 
 const Dashboard = () => {
 
@@ -10,27 +10,26 @@ const Dashboard = () => {
   const [totalProduct, setTotalProduct] = useState()
   const [totalPrice, setTotalPrice] = useState()
 
+
   useEffect(() => {
 
-    // console.log(localStorage.getItem('login'))
-
-    if (localStorage.getItem('login') !== 'true') navigate('/login')
-
+    if (!localStorage.getItem('stationary')) navigate('/login')
     const fetchData = async () => {
 
-      const product = await getAllProducts()
+      const { status, data } = await getRequest('/api/product/')
+      console.log(data, status)
+      if (status != 200) {
 
-      
-      
-      setTotalPrice(product.reduce((sum, item) => sum + item.totalRate, 0))
-      setTotalProduct(product.length)
+        return
+      }
 
+      // console.log(data.products)
+      setTotalPrice(data.products.reduce((sum, item) => sum + Number(item.price), 0))
 
-      console.log(product)
-      console.log(totalPrice)
+      setTotalProduct(products.length)
     }
-    fetchData()
 
+    fetchData()
   }, [])
 
   return (
@@ -65,13 +64,14 @@ const Dashboard = () => {
         <div className="col-span-12 md:col-span-9">
           <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-6">
 
-          <Card title='Total Products' count={totalProduct} />
+            <Card title='Total Products' count={totalProduct} />
 
-          <Card title='Low Stock' count={totalProduct} />
+            <Card title='Low Stock' count={totalProduct} />
 
-          <Card title='Out of Stock' count={totalProduct} />
+            <Card title='Out of Stock' count={totalProduct} />
 
           </div>
+
 
           <div className="mt-8 bg-gray-800 p-6 rounded-lg"></div>
         </div>
