@@ -1,11 +1,13 @@
 export default async function postRequest(url, data) {
 
-    // console.log(data, token)
-
+    const token = localStorage.getItem('stationary')
+    // console.log(token)
+    
     const res = await fetch(url, {
         method: 'POST',
         headers: {
 
+            Authorization: `Bearer ${token}`,
             'Content-type': 'application/json'
         },
         body: JSON.stringify(data)
@@ -13,5 +15,5 @@ export default async function postRequest(url, data) {
 
     const response = await res.json()
 
-    return response
+    return {status: res.status, data: response}
 }

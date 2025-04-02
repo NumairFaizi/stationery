@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
-
+import postRequest from '../../services/postRequest'
+import { ToastContainer, toast } from 'react-toastify';
 
 const Add_product = ({ closeModal }) => {
     const [productName, setProductName] = useState('');
@@ -11,14 +12,43 @@ const Add_product = ({ closeModal }) => {
         event.preventDefault();
 
         const product = {
-            productName,
+            name: productName,
             brand,
             rate: parseFloat(rate),
-            quantity: parseInt(quantity, 10),
-            totalRate: parseFloat((rate * quantity), 10)
+            qty: parseInt(quantity, 10),
+            price: parseFloat((rate * quantity), 10)
         };
 
+        // console.log(product)
         // add product
+        const { status, data } = await postRequest('/api/product/', product)
+
+        const notify = () => {
+            if (status !== 201) {
+
+                toast.error(data.message, {
+                    position: "bottom-right",
+                    autoClose: 3000,
+                    hideProgressBar: false,
+                    closeOnClick: true,
+                    pauseOnHover: true,
+                    draggable: true,
+                    progress: undefined,
+                });
+
+            } else {
+                toast.success(data.message, {
+                    position: "bottom-right",
+                    autoClose: 3000,
+                    hideProgressBar: false,
+                    closeOnClick: true,
+                    pauseOnHover: true,
+                    draggable: true,
+                    progress: undefined,
+                });
+            }
+        };
+        notify()
 
         // Clear form fields
         setProductName('');
@@ -32,6 +62,8 @@ const Add_product = ({ closeModal }) => {
 
     return (
         <div className="fixed inset-0 z-50 flex justify-center items-center bg-black bg-opacity-50">
+
+            <ToastContainer />
             <div className="backdrop-blur-sm bg-white/30 p-8 rounded-lg shadow-lg w-full max-w-md relative">
                 <button
                     onClick={closeModal}
