@@ -6,28 +6,38 @@ const DisplayBill = () => {
     const [searchString, setSearchString] = useState('')
     const [billingData, setBillingData] = useState([])
     const [isBill, setIsBill] = useState(false)
+    const [date, setDate] = useState('')
 
     const fetchData = async (url) => {
 
         const { status, data } = await getRequest(url)
-        console.log(status, data)
+        // console.log(status, data)
 
-        if (status !== 200) {
+        if (status !== 200 || !data || data.length === 0) {
 
             setIsBill(false)
-            return
-        }
-        setIsBill(true)
+            setBillingData([]);
+        } else {
 
-        setBillingData(data)
+            setIsBill(true)
+            setBillingData(data)
+        }
     }
 
-    const handleChange = (e) => {
-        // console.log(e.target.value)
-        setSearchString(e.target.value)
+    const handleChange = async (e, type) => {
 
-        fetchData(`/api/billing/bill-by-search-string/${e.target.value}`)
-        // console.log(data)
+        let url = `/api/billing/bill-by-search-string/${e.target.value}`
+        if (type == 'text') {
+
+            setSearchString(e.target.value)
+        } else if (type === 'date') {
+
+            setDate(e.target.value)
+        } else {
+
+            url = '/api/billing/bills'
+        }
+        fetchData(url)
     }
 
     useEffect(() => {
@@ -35,13 +45,6 @@ const DisplayBill = () => {
         fetchData('/api/billing/bills')
 
     }, [])
-    const handleSubmit = async (e) => {
-        e.preventDefault();
-        console.log(searchString)
-
-        // const { status, data } = await getRequest('/api/billing/add-bill', bill)
-
-    };
 
     return (
 
@@ -49,24 +52,34 @@ const DisplayBill = () => {
 
             <div className="bg-white/10 p-8 shadow-2xl w-full backdrop-blur-xl">
 
-                <form className="flex w-full gap-2 justify-center items-center" onSubmit={handleSubmit}>
+                <form className="flex w-full gap-2 justify-center items-center">
                     <div className='w-full'>
 
                         <input
                             type="text"
                             placeholder="Email or Mobile"
                             value={searchString}
-                            onChange={(e) => { handleChange(e) }}
+                            onChange={(e) => { handleChange(e, 'text') }}
                             className="w-full p-2 rounded-lg text-gray-100 border-2 border-gray-500 bg-gray-700"
-                            required
+
+                        />
+                    </div>
+
+                    <div>
+                        <input
+                            type="date"
+                            placeholder="Date"
+                            value={date}
+                            onChange={(e) => { handleChange(e, 'date') }}
+                            className="w-full p-2 rounded-lg text-gray-100 border-2 border-gray-500 bg-gray-700"
                         />
                     </div>
 
                     <div>
 
-                        <button type="submit" className="py-2 px-3 bg-green-600 text-white font-bold rounded-lg">
+                        {/* <button type="submit" className="py-2 px-3 bg-green-600 text-white font-bold rounded-lg">
                             search
-                        </button>
+                        </button> */}
                     </div>
                 </form>
 
@@ -74,17 +87,17 @@ const DisplayBill = () => {
                 <div className='min-h-screen, overflow-y-auto'>
                     {isBill ? (
 
-                        <div>{billingData.billingData.map((data, key) => {
+                        <div>{billingData.billingData.map((data) => {
                             return (
 
-                                <div>
-                                    <h2>{data.customerName}</h2>
-                                    <h2>{data.email}</h2>
+                                <div key={data._id} className="p-4 bg-gray-800 text-white rounded-lg my-2">
+                                    <h2 className="text-lg font-semibold">{data.customerName}</h2>
+                                    <h2 className="text-sm text-gray-300">{data.email}</h2>
                                 </div>
                             )
                         })}
                         </div>
-                    ) : <div>No billing data</div>}
+                    ) : <div className="text-center text-white mt-4">No billing data</div>}
 
                 </div>
 
