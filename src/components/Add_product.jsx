@@ -6,7 +6,7 @@ import notify from '../utils/toast';
 const Add_product = ({ closeModal }) => {
     const [productName, setProductName] = useState('');
     const [brand, setBrand] = useState('');
-    const [rate, setRate] = useState('');
+    const [price, setPrice] = useState('');
     const [quantity, setQuantity] = useState('');
 
     const HandleAddProduct = async (event) => {
@@ -15,9 +15,8 @@ const Add_product = ({ closeModal }) => {
         const product = {
             name: productName,
             brand,
-            rate: parseFloat(rate),
-            qty: parseInt(quantity, 10),
-            price: parseFloat((rate * quantity), 10)
+            qty: parseInt(quantity),
+            price: parseFloat(price)
         };
 
         // console.log(product)
@@ -30,7 +29,7 @@ const Add_product = ({ closeModal }) => {
         // Clear form fields
         setProductName('');
         setBrand('');
-        setRate('');
+        setPrice('');
         setQuantity('');
 
         // Close modal after adding the product
@@ -70,9 +69,9 @@ const Add_product = ({ closeModal }) => {
                     />
                     <input
                         type="number"
-                        placeholder="Rate"
-                        value={rate}
-                        onChange={(e) => setRate(e.target.value)}
+                        placeholder="Price"
+                        value={price}
+                        onChange={(e) => setPrice(e.target.value)}
                         required
                         className="w-full p-3 rounded-md text-gray-800 border-2 border-gray-300 focus:border-blue-500 focus:outline-none opacity-100"
                     />

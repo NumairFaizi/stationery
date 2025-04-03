@@ -6,6 +6,7 @@ import Billing from './pages/Billing';
 import Inventory from './pages/Inventory';
 import Backup from './pages/Backup';
 import { BrowserRouter, Routes, Route, useLocation } from 'react-router-dom';
+import DisplayBill from './pages/DisplayBill';
 
 function App() {
   const location = useLocation();
@@ -20,6 +21,7 @@ function App() {
         <Route exact path="/login" element={<Login />} />
         <Route path="/" element={<Dashboard />} />
         <Route path='/Billing' element={<Billing/>}/>
+        <Route path='/display-bill' element={<DisplayBill/>}/>
         <Route path="/Inventory" element={<Inventory />} />
         <Route path="/Backup" element={<Backup/>} />
       </Routes>
