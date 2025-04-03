@@ -4,9 +4,9 @@ import { toast } from "react-toastify";
 export default function notify(status, message) {
 
 
-    if (status != 201 || status != 200) {
+    if (status != 201 && status != 200) {
      
-        console.log(status)
+        // console.log(status)
         toast.error(message, {
             position: "bottom-right",
             autoClose: 3000,
@@ -18,7 +18,7 @@ export default function notify(status, message) {
         });
 
     } else {
-        console.log(status)
+        // console.log(status)
         toast.success(message, {
             position: "bottom-right",
             autoClose: 3000,

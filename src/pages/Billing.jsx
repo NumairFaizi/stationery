@@ -1,14 +1,14 @@
 import React, { useState, useEffect } from 'react';
 import getRequest from '../../services/getRequest';
 import postRequest from '../../services/postRequest'
-import toast from '../utils/toast'
 import { ToastContainer } from 'react-toastify';
+import notify from '../utils/toast';
 
 const Billing = () => {
   const [customerName, setCustomerName] = useState('');
   const [email, setEmail] = useState('');
   const [products, setProducts] = useState([]);  // Fetched product list
-  const [billingProducts, setBillingProducts] = useState([]); // User-selected products
+  const [billingProducts, setBillingProducts] = useState([{ name: '', qty: 1, price: 0, brand: '', totalPrice: 0 }]); // User-selected products
   const [brands, setBrands] = useState([])
 
   useEffect(() => {
@@ -79,9 +79,9 @@ const Billing = () => {
     // console.log(bill)
 
     const { status, data } = await postRequest('/api/billing/add-bill', bill)
-    console.log(status)
-
-    toast(status, data)
+    
+    // console.log(data)
+    notify(status, data.message)
   };
 
   const handleReset = () => {
@@ -92,6 +92,7 @@ const Billing = () => {
 
   return (
     <div className="flex justify-center min-h-screen bg-gradient-to-br from-gray-800 via-gray-700 to-gray-900 p-4">
+
       <ToastContainer />
 
       <div className="bg-white/10 p-8 shadow-2xl w-full backdrop-blur-xl">
