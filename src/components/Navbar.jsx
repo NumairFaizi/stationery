@@ -32,6 +32,9 @@ const Navbar = () => {
             <Link to="/Billing" className="text-sm font-medium hover:text-gray-900">
               Bill
             </Link>
+            <Link to="/display-bill" className="text-sm font-medium hover:text-gray-900">
+              Display Bill
+            </Link>
             <Link to="/Inventory" className="text-sm font-medium hover:text-gray-900">
               Inventory
             </Link>
