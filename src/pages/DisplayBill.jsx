@@ -1,10 +1,40 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import getRequest from '../../services/getRequest';
 
 const DisplayBill = () => {
 
     const [searchString, setSearchString] = useState('')
+    const [billingData, setBillingData] = useState([])
+    const [isBill, setIsBill] = useState(false)
 
+    const fetchData = async (url) => {
+
+        const { status, data } = await getRequest(url)
+        console.log(status, data)
+
+        if (status !== 200) {
+
+            setIsBill(false)
+            return
+        }
+        setIsBill(true)
+
+        setBillingData(data)
+    }
+
+    const handleChange = (e) => {
+        // console.log(e.target.value)
+        setSearchString(e.target.value)
+
+        fetchData(`/api/billing/bill-by-search-string/${e.target.value}`)
+        // console.log(data)
+    }
+
+    useEffect(() => {
+
+        fetchData('/api/billing/bills')
+
+    }, [])
     const handleSubmit = async (e) => {
         e.preventDefault();
         console.log(searchString)
@@ -12,14 +42,6 @@ const DisplayBill = () => {
         // const { status, data } = await getRequest('/api/billing/add-bill', bill)
 
     };
-
-    const handleChange = (e) => { 
-        // console.log(e.target.value)
-        setSearchString(e.target.value)
-
-        // const {status, data} = getRequest('', e.target.value)
-    }
-
 
     return (
 
@@ -50,6 +72,19 @@ const DisplayBill = () => {
 
                 {/* Data will be displayed here */}
                 <div className='min-h-screen, overflow-y-auto'>
+                    {isBill ? (
+
+                        <div>{billingData.billingData.map((data, key) => {
+                            return (
+
+                                <div>
+                                    <h2>{data.customerName}</h2>
+                                    <h2>{data.email}</h2>
+                                </div>
+                            )
+                        })}
+                        </div>
+                    ) : <div>No billing data</div>}
 
                 </div>
 
