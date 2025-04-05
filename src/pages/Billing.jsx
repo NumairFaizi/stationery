@@ -74,7 +74,7 @@ const Billing = () => {
       billingProducts,
       totalAmount: billingProducts.reduce((sum, p) => sum + p.totalPrice, 0),
       totalItem: billingProducts.length,
-      date: new Date().toLocaleString()
+      dateAndTime: new Date().toLocaleString()
     }
     // console.log(bill)
 
