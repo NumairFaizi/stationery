@@ -10,6 +10,10 @@ const Billing = () => {
   const [products, setProducts] = useState([]);  // Fetched product list
   const [billingProducts, setBillingProducts] = useState([{ name: '', qty: 1, price: 0, brand: '', totalPrice: 0 }]); // User-selected products
   const [brands, setBrands] = useState([])
+  const [discount, setDiscount] = useState('')
+  const [paymentMethod, setPaymentMethod] = useState('Cash')
+  const [SGSTandCGST, setSGSTAndCGST] = useState('')
+
 
   useEffect(() => {
 
@@ -67,19 +71,34 @@ const Billing = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
+    const subTotal = billingProducts.reduce((sum, p) => sum + p.totalPrice, 0)
+
+    const discountAmount = subTotal - Number(discount)
+
+    const CGSTAmount = (subTotal * SGSTandCGST) / 100
+
+    const grandTotal = discountAmount + CGSTAmount
+
     const bill = {
 
       customerName,
       email,
       billingProducts,
-      totalAmount: billingProducts.reduce((sum, p) => sum + p.totalPrice, 0),
+      discountAmount,
+      discount,
+      SGSTandCGST,
+      CGSTAmount,
+      paymentMethod,
+      subTotal,
+      grandTotal,
       totalItem: billingProducts.length,
       dateAndTime: new Date().toLocaleString()
     }
-    // console.log(bill)
+    console.log( 'discountAmount', discountAmount, 'discount', discount, 'SGST', SGSTandCGST, 'payment', paymentMethod, 'subtotal', subTotal, 'grandTotal',
+      grandTotal, CGSTAmount)
 
     const { status, data } = await postRequest('/api/billing/add-bill', bill)
-    
+
     // console.log(data)
     notify(status, data.message)
   };
@@ -89,6 +108,10 @@ const Billing = () => {
     setEmail('');
     setBillingProducts([]);
   };
+
+  const handlePaymentChange = (value) => {
+    setpaymentMethod(value)
+  }
 
   return (
     <div className="flex justify-center min-h-screen bg-gradient-to-br from-gray-800 via-gray-700 to-gray-900 p-4">
@@ -117,6 +140,36 @@ const Billing = () => {
               className="w-full p-3 rounded-lg text-gray-100 border-2 border-gray-500 bg-gray-700"
               required
             />
+
+            <input
+              type="text"
+              placeholder="Discount"
+              value={discount}
+              onChange={(e) => setDiscount(e.target.value)}
+              className="w-full p-3 rounded-lg text-gray-100 border-2 border-gray-500 bg-gray-700"
+              required
+            />
+
+            <select className="w-full max-w-md p-2 border rounded" value={SGSTandCGST} onChange={(e) => { setSGSTAndCGST(e.target.value) }}>
+              <option value="">Select CGST</option>
+              <option value="5">5%</option>
+              <option value="12">12%</option>
+            </select>
+
+            {/* <input
+              type="sgst and cgst"
+              placeholder="SGST and CGST"
+              // value={SGSTandCGST}
+              onChange={(e) => setSGSTAndCGST(e.target.value)}
+              className="w-full p-3 rounded-lg text-gray-100 border-2 border-gray-500 bg-gray-700"
+              required
+            /> */}
+
+            <select className="w-full max-w-md p-2 border rounded" value={paymentMethod} onChange={(e) => { setPaymentMethod(e.target.value) }}>
+              <option value="">Select Payment Method</option>
+              <option value="Cash">Cash</option>
+              <option value="UPI">UPI</option>
+            </select>
 
           </div>
 

@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import * as XLSX from 'xlsx';
+// import * as XLSX from 'xlsx';
 import getRequest from '../../services/getRequest';
 import notify from '../utils/toast';
 
@@ -7,19 +7,19 @@ const Inventory = () => {
   const [products, setProducts] = useState([]);
 
   const handleDownloadExcel = async () => {
-    const worksheet = XLSX.utils.json_to_sheet(products);
-    const workbook = XLSX.utils.book_new();
-    XLSX.utils.book_append_sheet(workbook, worksheet, "Products");
+    // const worksheet = XLSX.utils.json_to_sheet(products);
+    // const workbook = XLSX.utils.book_new();
+    // XLSX.utils.book_append_sheet(workbook, worksheet, "Products");
     
-    const excelBuffer = XLSX.write(workbook, { bookType: 'xlsx', type: 'array' });
-    const data = new Blob([excelBuffer], { type: 'application/octet-stream' });
-    const url = window.URL.createObjectURL(data);
+    // const excelBuffer = XLSX.write(workbook, { bookType: 'xlsx', type: 'array' });
+    // const data = new Blob([excelBuffer], { type: 'application/octet-stream' });
+    // const url = window.URL.createObjectURL(data);
 
-    const link = document.createElement('a');
-    link.href = url;
-    link.download = 'products.xlsx';
-    link.click();
-    window.URL.revokeObjectURL(url);
+    // const link = document.createElement('a');
+    // link.href = url;
+    // link.download = 'products.xlsx';
+    // link.click();
+    // window.URL.revokeObjectURL(url);
   }
 
   useEffect(() => {
