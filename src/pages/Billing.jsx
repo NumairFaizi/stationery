@@ -8,7 +8,7 @@ const Billing = () => {
   const [customerName, setCustomerName] = useState('');
   const [email, setEmail] = useState('');
   const [products, setProducts] = useState([]);  // Fetched product list
-  const [billingProducts, setBillingProducts] = useState([{ name: '', qty: 1, price: 0, brand: '', totalPrice: 0 }]); // User-selected products
+  const [billingProducts, setBillingProducts] = useState([{ id: '', name: '', qty: 1, price: 0, brand: '', totalPrice: 0 }]); // User-selected products
   const [brands, setBrands] = useState([])
   const [discount, setDiscount] = useState('')
   const [paymentMethod, setPaymentMethod] = useState('Cash')
@@ -25,6 +25,7 @@ const Billing = () => {
 
         setProducts(data);
 
+        // console.log(products)
         const uniqueBrands = [...new Set(data.map((product) => product.brand))];
         setBrands(uniqueBrands)
       }
@@ -32,6 +33,8 @@ const Billing = () => {
     };
 
     fetchData();
+
+
   }, []);
 
   const addProducts = () => {
@@ -44,6 +47,8 @@ const Billing = () => {
   // Handle product input changes
   const handleProductChange = (index, field, value) => {
     const newProducts = [...billingProducts];
+
+    // console.log(id)
 
     if (field === 'qty') {
       newProducts[index].qty = Number(value);
@@ -58,6 +63,7 @@ const Billing = () => {
           (p) => p.name === newProducts[index].name && p.brand === newProducts[index].brand
         );
         if (selectedProduct) {
+          newProducts[index].id = selectedProduct._id;
           newProducts[index].price = selectedProduct.price;
           newProducts[index].brand = selectedProduct.brand;
           newProducts[index].totalPrice = newProducts[index].qty * selectedProduct.price;
@@ -66,6 +72,7 @@ const Billing = () => {
     }
 
     setBillingProducts(newProducts);
+    // console.log(billingProducts)
   };
 
   const handleSubmit = async (e) => {
@@ -94,8 +101,10 @@ const Billing = () => {
       totalItem: billingProducts.length,
       dateAndTime: new Date().toLocaleString()
     }
-    console.log( 'discountAmount', discountAmount, 'discount', discount, 'SGST', SGSTandCGST, 'payment', paymentMethod, 'subtotal', subTotal, 'grandTotal',
-      grandTotal, CGSTAmount)
+    // console.log( 'discountAmount', discountAmount, 'discount', discount, 'SGST', SGSTandCGST, 'payment', paymentMethod, 'subtotal', subTotal, 'grandTotal',
+    //   grandTotal, CGSTAmount)
+
+    // console.log(billingProducts)
 
     const { status, data } = await postRequest('/api/billing/add-bill', bill)
 
@@ -187,11 +196,15 @@ const Billing = () => {
 
                 {products.map((item) => (
 
+
                   <option key={item._id} value={item.name}>
                     {item.name}
+
                   </option>
 
-                ))}
+                ))
+
+                }
               </select>
 
               <select
